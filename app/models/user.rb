@@ -5,4 +5,8 @@ class User < ApplicationRecord
   validates :range_min, :range_max, numericality: true
 
   has_one :report
+
+  def nightscout
+    @nightscout ||= Nightscout.new(nightscout_host, nightscout_token)
+  end
 end
