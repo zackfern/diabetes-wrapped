@@ -1,0 +1,27 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+mgdl:
+  report: mgdl
+  month: 1
+  status: in_progress
+  total_insulin: 1
+  total_basal: 1
+  total_bolus: 1
+  highest_bg: 1
+  highest_bg_day: 2026-01-01
+  lowest_bg: 1
+  lowest_bg_day: 2026-01-02
+  days_in_range: 1
+
+mmol:
+  report: mmol
+  month: 1
+  status: in_progress
+  total_insulin: 1
+  total_basal: 1
+  total_bolus: 1
+  highest_bg: 1
+  highest_bg_day: 2026-01-08
+  lowest_bg: 1
+  lowest_bg_day: 2026-01-10
+  days_in_range: 1

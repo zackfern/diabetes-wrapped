@@ -10,7 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_11_02_211757) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_02_212744) do
+  create_table "report_months", force: :cascade do |t|
+    t.integer "report_id", null: false
+    t.integer "month", null: false
+    t.string "status", default: "in_progress"
+    t.integer "total_insulin"
+    t.integer "total_basal"
+    t.integer "total_bolus"
+    t.integer "highest_bg"
+    t.date "highest_bg_day"
+    t.integer "lowest_bg"
+    t.date "lowest_bg_day"
+    t.integer "days_in_range"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["report_id"], name: "index_report_months_on_report_id"
+  end
+
   create_table "reports", force: :cascade do |t|
     t.integer "user_id", null: false
     t.string "slug", null: false
@@ -30,5 +47,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_02_211757) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "report_months", "reports"
   add_foreign_key "reports", "users"
 end
