@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+mgdl:
+  user: mgdl
+  slug: my-mgdl-stats
+  status: not_started
+
+mmol:
+  user: mmol
+  slug: my-mmol-stats
+  status: not_started

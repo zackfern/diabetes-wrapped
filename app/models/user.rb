@@ -3,4 +3,6 @@ class User < ApplicationRecord
   validates :nightscout_host, format: URI::DEFAULT_PARSER.make_regexp
   validates :nightscout_token, presence: true
   validates :range_min, :range_max, numericality: true
+
+  has_one :report
 end
