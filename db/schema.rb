@@ -14,7 +14,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_02_212744) do
   create_table "report_months", force: :cascade do |t|
     t.integer "report_id", null: false
     t.integer "month", null: false
-    t.string "status", default: "in_progress"
+    t.integer "status"
     t.integer "total_insulin"
     t.integer "total_basal"
     t.integer "total_bolus"
@@ -33,8 +33,10 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_02_212744) do
 
   create_table "reports", force: :cascade do |t|
     t.integer "user_id", null: false
+    t.integer "year", default: 2026
     t.string "slug", null: false
-    t.string "status", default: "not_started"
+    t.integer "status"
+    t.boolean "include_insulin"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_reports_on_user_id"
@@ -44,6 +46,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_02_212744) do
     t.string "email", null: false
     t.string "nightscout_host"
     t.string "nightscout_token"
+    t.string "timezone"
     t.float "range_min", default: 70.0
     t.float "range_max", default: 180.0
     t.datetime "created_at", null: false

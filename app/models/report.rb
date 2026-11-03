@@ -1,4 +1,6 @@
 class Report < ApplicationRecord
+  enum :status, [ :not_started, :in_progress, :finished ], default: :not_started
+
   belongs_to :user
-  enum :status, [ :not_started, :in_progress, :finished ]
+  has_many :months, class_name: "ReportMonth"
 end

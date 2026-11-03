@@ -6,6 +6,7 @@ mgdl:
   nightscout_token: MyString
   range_min: 70.0
   range_max: 180.0
+  timezone: America/Los_Angeles
 
 mmol:
   email: mmol@example.com
@@ -13,3 +14,4 @@ mmol:
   nightscout_token: MyString
   range_min: 3.9
   range_max: 10.0
+  timezone: Europe/Copenhagen

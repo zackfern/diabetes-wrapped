@@ -2,10 +2,12 @@
 
 mgdl:
   user: mgdl
+  year: 2026
   slug: my-mgdl-stats
   status: not_started
 
 mmol:
   user: mmol
+  year: 2026
   slug: my-mmol-stats
   status: not_started
