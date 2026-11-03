@@ -19,10 +19,13 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_02_212744) do
     t.integer "total_basal"
     t.integer "total_bolus"
     t.integer "highest_bg"
-    t.date "highest_bg_day"
+    t.date "highest_bg_date"
     t.integer "lowest_bg"
-    t.date "lowest_bg_day"
+    t.date "lowest_bg_date"
     t.integer "days_in_range"
+    t.integer "biggest_bolus"
+    t.date "biggest_bolus_date"
+    t.integer "bolus_count"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["report_id"], name: "index_report_months_on_report_id"

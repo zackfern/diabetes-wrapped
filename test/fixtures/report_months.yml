@@ -8,10 +8,12 @@ mgdl:
   total_basal: 1
   total_bolus: 1
   highest_bg: 1
-  highest_bg_day: 2026-01-01
+  highest_bg_date: 2026-01-01
   lowest_bg: 1
-  lowest_bg_day: 2026-01-02
+  lowest_bg_date: 2026-01-02
   days_in_range: 1
+  biggest_bolus_date: 2026-01-10
+  bolus_count: 105
 
 mmol:
   report: mmol
@@ -21,7 +23,9 @@ mmol:
   total_basal: 1
   total_bolus: 1
   highest_bg: 1
-  highest_bg_day: 2026-01-08
+  highest_bg_date: 2026-01-08
   lowest_bg: 1
-  lowest_bg_day: 2026-01-10
+  lowest_bg_date: 2026-01-10
   days_in_range: 1
+  biggest_bolus_date: 2026-01-08
+  bolus_count: 93
