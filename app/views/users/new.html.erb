@@ -1,0 +1,45 @@
+<% if @user.errors.present? %>
+  <div class="errors">
+    An error ocurred:
+    <ul>
+      <% @user.errors.full_messages.each do |error| %>
+        <li><%= error %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<%= form_for @user do |f| %>
+  <div class="row">
+    <%= f.label :email %>
+    <%= f.email_field :email, placeholder: "tired-diabetic@example.com" %>
+    <p class="description">
+      We'll email you a link to manage your access your report and manage your data.
+    </p>
+  </div>
+
+  <div class="row">
+    <%= f.label :nightscout_host %>
+    <%= f.text_field :nightscout_host, placeholder: "https://my-nightscout.example.com" %>
+    <p class="description">
+      The URL you use to connect to your Nightscout server.
+      Include HTTP or HTTPS.
+    </p>
+  </div>
+
+  <div class="row">
+    <%= f.label :nightscout_token %>
+    <%= f.password_field :nightscout_token, placeholder: "readonly-t0k3n" %>
+    <p class="description">
+      This allows us to query your data. We recommend using a unique,
+      read-only key.
+    </p>
+  </div>
+
+  <div class="row" data-controller="timezone">
+    <%= f.label :timezone %>
+    <%= f.select :timezone, timezone_options_for_select(@user.timezone), {}, data: { timezone_target: "tz" } %>
+  </div>
+
+  <%= f.submit "Continue" %>
+<% end %>
