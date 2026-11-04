@@ -56,13 +56,13 @@ class MonthlyReportJob < ApplicationJob
     # Enqueue the next job or wrap up:
     if month < 12
       # Don't enqueue a job if the next month hasn't happened yet:
-      unless (@last_day + 1).future?
-        # MonthlyReportJob.perform_later(report_id, month + 1)
+      if (@last_day + 1).future?
+        ReportOrchestrationJob.perform_later(report_id)
+      else
+        MonthlyReportJob.perform_later(report_id, month + 1)
       end
     else
-      # FIXME: Probably extract this to another job.
-      Rails.logger.info("Finished all of the jobs for Report #{report.id}")
-      report.update({ state: :finished })
+      ReportOrchestrationJob.perform_later(report_id)
     end
   end
 
