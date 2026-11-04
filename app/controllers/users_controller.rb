@@ -14,7 +14,13 @@ class UsersController < ApplicationController
     end
   end
 
+  def logout
+    reset_session
+    redirect_to :root
+  end
+
   private
+
   def user_params
     params.require(:user).permit(:email, :nightscout_host, :nightscout_token)
   end
