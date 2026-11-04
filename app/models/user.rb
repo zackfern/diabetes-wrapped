@@ -6,6 +6,7 @@ class User < ApplicationRecord
   validates :nightscout_token, presence: true
   validates :range_min, :range_max, numericality: true
   validates :unit, inclusion: { in: UNITS }
+  validates_with NightscoutValidator, on: :create
 
   has_one :report, dependent: :destroy
 

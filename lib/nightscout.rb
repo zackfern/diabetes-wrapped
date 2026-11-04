@@ -79,7 +79,7 @@ class Nightscout
       if result.success?
         result
       elsif result.unauthorized?
-        raise Unauthorized.new
+        raise UnauthorizedError.new
       else
         raise Error.new(result.status)
       end
