@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_11_02_212744) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_04_011225) do
   create_table "report_months", force: :cascade do |t|
     t.integer "report_id", null: false
     t.integer "month", null: false
@@ -51,6 +51,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_02_212744) do
     t.float "range_max", default: 180.0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "unit"
   end
 
   add_foreign_key "report_months", "reports"
