@@ -1,12 +1,18 @@
-Your <%= @report.year %> diabetes wrapped.
+<header>
+  Your <%= @report.year %> diabetes wrapped:
+</header>
 
 <% if @report.include_insulin? %>
-  <div class="stat">
-    You used a total of
-    <strong>
-      <%= number_to_delimited @report.total_insulin %>
-    </strong>
-    units of insulin.
+  <div class="stat icon-right">
+    <div>
+      You used a total of
+      <strong class="grand-total">
+        <%= number_to_delimited @report.total_insulin %>
+        units
+      </strong>
+      of insulin.
+    </div>
+    <div class="icon blue">💧</div>
   </div>
 
   <div class="stat">
@@ -16,18 +22,45 @@ Your <%= @report.year %> diabetes wrapped.
     units of that was for boluses, alone.
   </div>
 
-  <div class="stat">
-    Speaking of which, you bolused
-    <strong>
-      <%= number_to_delimited @report.bolus_count %>
-    </strong>
-    times.
+  <div class="stat icon-left">
+    <div class="icon grey">🔢</div>
+    <div>
+      Speaking of which, you bolused
+      <strong>
+        <%= number_to_delimited @report.bolus_count %>
+      </strong>
+      times.
+
+      <p class="subtext">
+        That's around <%= @report.boluses_per_day %> boluses per day.
+      </p>
+    </div>
   </div>
 <% end %>
 
-<% if @report.days_in_range > 0 %>
-  You had <%= pluralize @report.days_in_range, 'day' %> 100% in range!
-<% else %>
-  You didn't have any days 100% in range... you can do it next year!
-<% end %>
+<div class="stat icon-right">
+  <% if @report.days_in_range > 0 %>
+    <div>
+      You had
+      <strong><%= pluralize @report.days_in_range, 'day' %></strong>
+      100% in range!
+    </div>
+    <div class="icon red">💯</div>
+  <% else %>
+    You didn't have any days 100% in range... you can do it next year!
+  <% end %>
+</div>
+
+<div class="stat icon-left bedtime">
+  <div class="icon">🥱</div>
+  <div>
+    You were probably woken up
+    <strong><%= pluralize @report.wake_ups, 'nights' %></strong>
+    with low blood sugar.
+
+    <p class="subtext">
+      Or roughly once every <%= pluralize @report.wake_up_frequency, "night" %>.
+    </p>
+  </div>
+</div>
 
