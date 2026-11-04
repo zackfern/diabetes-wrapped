@@ -14,7 +14,7 @@ class UsersController < ApplicationController
 
       if @report.save
         ReportOrchestrationJob.perform_later(@report.id)
-        redirect_to report_path(@report)
+        redirect_to report_path(@report.slug)
       end
     else
       render action: :new, status: :unprocessable_entity
