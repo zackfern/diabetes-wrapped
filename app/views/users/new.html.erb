@@ -9,7 +9,7 @@
   </div>
 <% end %>
 
-<%= form_for @user do |f| %>
+<%= form_for @user, data: { controller: "signup-form" } do |f| %>
   <div class="row">
     <%= f.label :email %>
     <%= f.email_field :email, placeholder: "tired-diabetic@example.com" %>
@@ -36,9 +36,33 @@
     </p>
   </div>
 
-  <div class="row" data-controller="timezone">
+  <div class="row">
     <%= f.label :timezone %>
-    <%= f.select :timezone, timezone_options_for_select(@user.timezone), {}, data: { timezone_target: "tz" } %>
+    <%= f.select :timezone, timezone_options_for_select(@user.timezone), {}, data: { signup_form_target: "tz" } %>
+  </div>
+
+  <div class="row">
+    <%= f.label :unit %>
+    <%= f.select :unit, User::UNITS, {}, data: { action: "signup-form#change_unit" } %>
+    <p class="description">
+      Which unit do you want to see your report in?
+    </p>
+  </div>
+
+  <div class="row halves">
+    <div class="column">
+      <%= f.label :range_min, "Range minimum" %>
+      <%= f.number_field :range_min, data: { signup_form_target: "rangeMin" } %>
+    </div>
+
+    <div class="column">
+      <%= f.label :range_max, "Range maximum" %>
+      <%= f.number_field :range_max, data: { signup_form_target: "rangeMax" } %>
+    </div>
+
+    <p class="description">
+      Set the minimum and maximum values for what you consider to be "in range."
+    </p>
   </div>
 
   <%= f.submit "Continue" %>
