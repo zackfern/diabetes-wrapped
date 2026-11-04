@@ -8,7 +8,14 @@ class UsersController < ApplicationController
 
     if @user.save
       session[:current_user_id] = @user.id
-      # redirect_to new_report_path
+
+      latest_treatment = @user.nightscout.latest_treatment
+      @report = @user.build_report(include_insulin: latest_treatment.present?)
+
+      if @report.save
+        ReportOrchestrationJob.perform_later(@report.id)
+        redirect_to report_path(@report)
+      end
     else
       render action: :new, status: :unprocessable_entity
     end
@@ -22,6 +29,14 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:email, :nightscout_host, :nightscout_token)
+    params.require(:user).permit(
+      :email,
+      :nightscout_host,
+      :nightscout_token,
+      :range_max,
+      :range_min,
+      :timezone,
+      :unit,
+    )
   end
 end
