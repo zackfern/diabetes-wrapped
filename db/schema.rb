@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_11_04_011225) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_04_035517) do
   create_table "report_months", force: :cascade do |t|
     t.integer "report_id", null: false
     t.integer "month", null: false
@@ -39,6 +39,11 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_04_011225) do
     t.boolean "include_insulin"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "total_insulin"
+    t.integer "total_basal"
+    t.integer "total_bolus"
+    t.integer "bolus_count"
+    t.integer "days_in_range"
     t.index ["user_id"], name: "index_reports_on_user_id"
   end
 
