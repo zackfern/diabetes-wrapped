@@ -3,4 +3,8 @@ class Report < ApplicationRecord
 
   belongs_to :user
   has_many :months, class_name: "ReportMonth", dependent: :destroy
+
+  after_initialize do |record|
+    record.slug ||= "#{RandomNonsense.adjective_food_diabetes}-#{rand(1921)}"
+  end
 end
