@@ -1,0 +1,33 @@
+Your <%= @report.year %> diabetes wrapped.
+
+<% if @report.include_insulin? %>
+  <div class="stat">
+    You used a total of
+    <strong>
+      <%= number_to_delimited @report.total_insulin %>
+    </strong>
+    units of insulin.
+  </div>
+
+  <div class="stat">
+    <strong>
+      <%= number_to_delimited @report.total_bolus %>
+    </strong>
+    units of that was for boluses, alone.
+  </div>
+
+  <div class="stat">
+    Speaking of which, you bolused
+    <strong>
+      <%= number_to_delimited @report.bolus_count %>
+    </strong>
+    times.
+  </div>
+<% end %>
+
+<% if @report.days_in_range > 0 %>
+  You had <%= pluralize @report.days_in_range, 'day' %> 100% in range!
+<% else %>
+  You didn't have any days 100% in range... you can do it next year!
+<% end %>
+
