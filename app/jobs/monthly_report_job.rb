@@ -33,7 +33,8 @@ class MonthlyReportJob < ApplicationJob
       highest_bg_date: Time.parse(@blood_glucose[:highest]["dateString"]).to_date,
       lowest_bg: @blood_glucose[:lowest_value],
       lowest_bg_date: Time.parse(@blood_glucose[:lowest]["dateString"]).to_date,
-      days_in_range: @days_in_range
+      days_in_range: @days_in_range,
+      wake_ups: @nightly_wakeups
     })
 
     if report.include_insulin?
@@ -76,10 +77,12 @@ class MonthlyReportJob < ApplicationJob
       lowest: nil
     }
     @days_in_range = 0
+    @nightly_wakeups = 0
 
     # Iterate over every day in the month and request entries from Nightscout:
     (@first_day..@last_day).each do |day|
       entries = nightscout.on_date(day)
+      woken_up = false
       reading_in_range, reading_out_of_range = 0, 0
 
       entries.each do |entry|
@@ -91,8 +94,16 @@ class MonthlyReportJob < ApplicationJob
           @blood_glucose[:lowest] = entry
         end
 
-        if entry["sgv"] > user.range_max || entry["sgv"] < user.range_min
+        if entry["sgv"] >= user.range_max
           reading_out_of_range += 1
+        elsif entry["sgv"] <= user.range_min
+          reading_out_of_range += 1
+
+          # Don't calculate if we've already been woken up on this day:
+          unless woken_up
+            occurred_at = Time.parse(entry["dateString"])
+            woken_up = occurred_at.hour.between?(0, 6)
+          end
         else
           reading_in_range += 1
         end
@@ -100,6 +111,9 @@ class MonthlyReportJob < ApplicationJob
 
       # If there were no out-of-range readings, count that as a day in range:
       @days_in_range += 1 if reading_out_of_range == 0
+
+      # If we went below our range, assume we were woken up to deal with it:
+      @nightly_wakeups += 1 if woken_up
     end
   end
 
