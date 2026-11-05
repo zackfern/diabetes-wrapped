@@ -67,6 +67,12 @@ class Nightscout
     get("/treatments.json", { base_uri:, query: })
   end
 
+  def profile(count: 24)
+    query = build_query({ count: })
+
+    get("/profile.json", { base_uri:, query: })
+  end
+
   private
   def build_query(q)
     base_query.merge(q)
