@@ -8,6 +8,10 @@ class Report < ApplicationRecord
     record.slug ||= "#{RandomNonsense.adjective_food_diabetes}-#{rand(1921)}"
   end
 
+  def profiles_cache_key
+    "#{user.id}-profiles"
+  end
+
   def boluses_per_day
     (bolus_count / days_for_calculation).round
   end

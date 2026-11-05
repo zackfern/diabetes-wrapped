@@ -131,22 +131,66 @@ class MonthlyReportJob < ApplicationJob
     (@first_day..@last_day).each do |day|
       treatments = nightscout.treatments_on_date(day)
 
+      temp_basals = []
       treatments.each do |treatment|
-        next unless treatment["insulin"].present? && treatment["insulin"] > 0
-        @insulin[:total_units] += treatment["insulin"]
-
         if treatment["eventType"].include?("Bolus")
+          next unless treatment["insulin"].is_a?(Numeric)
+
           @insulin[:bolus_count] += 1
           @insulin[:bolus_units] += treatment["insulin"]
+          @insulin[:total_units] += treatment["insulin"]
 
           if treatment["insulin"] > @insulin[:biggest_bolus]
             @insulin[:biggest_bolus] = treatment["insulin"]
             @insulin[:biggest_bolus_date] = treatment["created_at"]
           end
-        else
-          # FIXME: Add Basal stats!
+        elsif treatment["eventType"] == "Temp Basal"
+          duration = treatment["duration"]
+          next if duration.nil? || duration.zero?
+          next if treatment["created_at"].nil?
+
+          start_time = Time.zone.parse(treatment["created_at"])
+          temp_basals << {
+            start_time:,
+            end_time: start_time + duration,
+            value: treatment["absolute"]
+          }
         end
       end
+
+      profile = profile_for_day(day)
+      basals = profile.dig("store", profile["defaultProfile"], "basal")
+        .sort_by { it["timeAsSeconds"] }
+        .reverse
+
+      # Backfill normal basal rates around the temp basal rates:
+      basal_deliveries = temp_basals.inject([]) do |memo, segment|
+        last_basal = memo.reverse.find { it[:end_time] < segment[:start_time] }
+        start_time = last_basal&.dig(:end_time) || day.midnight
+
+        # Find the basal rate from our profile:
+        basal = basals.find { |basal| basal["timeAsSeconds"] <= start_time.seconds_since_midnight }
+
+        # Create a new segment which starts either after the last end_time (or at midnight) and ends when our temp rate begins:
+        memo << { start_time:, end_time: segment[:start_time], value: basal["value"] }
+
+        # And then add this temp rate to the list:
+        memo << segment
+
+        # Always return the memo last:
+        memo
+      end
+
+      total_basal = basal_deliveries.sum { |s| s[:value] * (s[:end_time] - s[:start_time]) / 1.hour.to_f }.round
+      @insulin[:basal_units] += total_basal
+      @insulin[:total_units] += total_basal
     end
+  end
+
+  def profile_for_day(day)
+    @profiles ||= Rails.cache.fetch(@report.profiles_cache_key, expires_in: 1.hour) {
+      nightscout.profile
+    }
+    @profiles.find { it["startDate"] <= day } || @profiles.first
   end
 end
