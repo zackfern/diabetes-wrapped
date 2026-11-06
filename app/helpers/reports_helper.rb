@@ -27,6 +27,12 @@ module ReportsHelper
   end
 
   def bg_with_unit(bg, small = true)
+    # Convert mg/dL to mmol/L if necessary:
+    if @report.unit == "mmol/L"
+      bg = (bg / 18.016).round(1)
+      bg = display_number(bg)
+    end
+
     content_tag(:strong, bg) +
       " ".html_safe +
       content_tag(:span, @report.unit, class: "unit #{small ? 'small' : ''}")
