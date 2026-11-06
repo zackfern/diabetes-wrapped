@@ -1,66 +1,175 @@
-<header>
-  Your <%= @report.year %> diabetes wrapped:
-</header>
+<% hide_header! %>
 
-<% if @report.include_insulin? %>
-  <div class="stat icon-right">
-    <div>
+<div class="report">
+  <header>
+    Your <%= @report.year %> <%= link_to "diabetes wrapped", :root %>:
+  </header>
+
+  <% if @report.include_insulin? %>
+    <div class="big-stat">
       You used a total of
       <strong class="grand-total">
-        <%= number_to_delimited @report.total_insulin %>
+        <%= number_to_delimited @report.total_insulin.round %>
         units
       </strong>
       of insulin.
     </div>
-    <div class="icon blue">💧</div>
-  </div>
 
-  <div class="stat">
-    <strong>
-      <%= number_to_delimited @report.total_bolus %>
-    </strong>
-    units of that was for boluses, alone.
-  </div>
+    <div class="container halves">
+      <div class="big-number">
+        <p class="number"><%= number_to_delimited @report.total_basal.round %></p>
+        <p class="label">units of basal insulin</p>
+      </div>
 
-  <div class="stat icon-left">
-    <div class="icon grey">🔢</div>
-    <div>
-      Speaking of which, you bolused
-      <strong>
-        <%= number_to_delimited @report.bolus_count %>
-      </strong>
-      times.
-
-      <p class="subtext">
-        That's around <%= @report.boluses_per_day %> boluses per day.
-      </p>
+      <div class="big-number">
+        <p class="number"><%= number_to_delimited @report.total_bolus.round %></p>
+        <p class="label">units for boluses</p>
+      </div>
     </div>
-  </div>
-<% end %>
 
-<div class="stat icon-right">
-  <% if @report.days_in_range > 0 %>
-    <div>
-      You had
-      <strong><%= pluralize @report.days_in_range, 'day' %></strong>
-      100% in range!
+    <div class="container">
+      <div class="vial-estimate">
+        <div class="vials" style="--number: <%= @report.vial_estimate %>;">
+          <span class="highlight">
+            That's around <strong><%= pluralize @report.vial_estimate, 'vial' %></strong>
+          </span>
+        </div>
+      </div>
+
+      <div class="stat icon-left">
+        <div class="icon grey">🔢</div>
+        <div>
+          You bolused
+          <strong>
+            <%= number_to_delimited @report.bolus_count %>
+          </strong>
+          times.
+
+          <p class="subtext">
+            Or roughly <%= pluralize @report.boluses_per_day, "time" %> per day.
+          </p>
+        </div>
+      </div>
     </div>
-    <div class="icon red">💯</div>
-  <% else %>
-    You didn't have any days 100% in range... you can do it next year!
   <% end %>
+
+  <section class="cgm">
+    <div class="container">
+      <div class="stat icon-right">
+        <% if @report.days_in_range > 0 %>
+          <div>
+            You spent
+            <strong><%= pluralize @report.days_in_range, 'day' %></strong>
+            100% in range!
+          </div>
+          <div class="icon red">💯</div>
+        <% else %>
+          You didn't have any days 100% in range.
+        <% end %>
+      </div>
+
+      <div class="stat icon-left bedtime">
+        <div class="icon">🌜</div>
+        <div>
+          You were probably woken up
+          <strong><%= pluralize @report.wake_ups, 'nights' %></strong>
+          with low blood sugar.
+
+          <p class="subtext">
+            Or roughly once every <%= pluralize @report.wake_up_frequency, "night" %>.
+          </p>
+        </div>
+      </div>
+
+      <div class="stat icon-left">
+        <div class="icon">📈</div>
+        <div>
+          Your highest blood glucose was <%= content_tag :strong, @highest_bg %>
+        </div>
+      </div>
+
+      <div class="stat icon-right text-right">
+        <div>
+          And your lowest was <%= content_tag :strong, @lowest_bg %>
+        </div>
+        <div class="icon">📉</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="months container">
+    <h2>Month by month breakdown:</h2>
+
+    <div>
+      <% @months.each do |month| %>
+        <div class="month">
+          <div class="name">
+            <%= Date::MONTHNAMES[month.month] %>
+          </div>
+
+          <div class="halves">
+            <% if @report.include_insulin? %>
+              <div class="grid">
+                <div class="label">Total basal</div>
+                <div class="number"><%= rounded_number_delimited month.total_basal %>u</div>
+
+                <div class="label">+ bolus</div>
+                <div class="number"><%= rounded_number_delimited month.total_bolus %>u</div>
+
+                <div class="label">= total insulin</div>
+                <div class="number"><%= rounded_number_delimited month.total_insulin %>u</div>
+
+                <div class="label">Biggest bolus:</div>
+                <div class="number"><%= rounded_number_delimited month.biggest_bolus %>u</div>
+              </div>
+            <% end %>
+
+            <div class="grid">
+              <div class="label">Highest BG:</div>
+              <div class="number"><%= month.highest_bg %></div>
+
+              <div class="label">Lowest BG:</div>
+              <div class="number"><%= month.lowest_bg %></div>
+
+              <div class="label">Days in range:</div>
+              <div class="number"><%= month.days_in_range %></div>
+
+              <div class="label">Wake ups:</div>
+              <div class="number"><%= month.wake_ups %></div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+    <% if @report.incomplete? %>
+      <div class="incomplete">
+        <strong>The year isn't over yet!</strong>
+
+        <% if viewer_is_owner? %>
+          <p>Come back in January to re-run the report and see the complete stats.</p>
+        <% else %>
+          <p>This report is incomplete because it was generated before the end of the year.</p>
+        <% end %>
+      </div>
+    <% end %>
+  </section>
 </div>
 
-<div class="stat icon-left bedtime">
-  <div class="icon">🥱</div>
-  <div>
-    You were probably woken up
-    <strong><%= pluralize @report.wake_ups, 'nights' %></strong>
-    with low blood sugar.
-
-    <p class="subtext">
-      Or roughly once every <%= pluralize @report.wake_up_frequency, "night" %>.
+<footer class="container">
+  <section class="disclaimer">
+    <p>
+      This report is meant for fun and to give a general idea of your life as a diabetic.
     </p>
-  </div>
-</div>
+
+    <p>
+      Some of the information, specifically basal insulin calculation, may be inaccurate
+      due to the complexity of calculations and variety of inputs.
+    </p>
+
+    <p>
+      Please refer to your Nightscout instance itself for the most accurate statistics.
+    </p>
+  </section>
+</footer>
 

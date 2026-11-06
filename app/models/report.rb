@@ -23,4 +23,16 @@ class Report < ApplicationRecord
   def days_for_calculation
     created_at.yday
   end
+
+  def vial_estimate
+    # Vials of insulin have 1000 each:
+    (total_insulin / 1000.0).round(1)
+  end
+
+  def incomplete?
+    # Report is incomplete if the last day of the year hasn't happened yet:
+    Time.use_zone(user.timezone) do
+      DateTime.new(year, 12, -1).end_of_day.future?
+    end
+  end
 end
