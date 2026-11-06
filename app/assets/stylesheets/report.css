@@ -192,13 +192,15 @@ div.months {
 }
 
 div.month {
-  margin-top: 1rem;
+  margin-top: 0.5rem 0;
   padding: 1rem;
+  padding-top: 0.5rem;
   border-bottom: 1px dashed #666;
 
   .name {
     font-weight: 500;
     color: red;
+    margin-bottom: 0.5rem;
   }
 
   .grid {
