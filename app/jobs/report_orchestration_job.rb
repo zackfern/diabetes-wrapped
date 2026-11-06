@@ -15,9 +15,9 @@ class ReportOrchestrationJob < ApplicationJob
 
   def finish_report!
     attrs = {
-      total_insulin: 0,
-      total_basal: 0,
-      total_bolus: 0,
+      total_insulin: 0.0,
+      total_basal: 0.0,
+      total_bolus: 0.0,
       bolus_count: 0,
       days_in_range: 0,
       wake_ups: 0

@@ -119,11 +119,11 @@ class MonthlyReportJob < ApplicationJob
 
   def insulin_stats
     @insulin = {
-      total_units: 0,
-      basal_units: 0,
+      total_units: 0.0,
+      basal_units: 0.0,
       bolus_count: 0,
-      bolus_units: 0,
-      biggest_bolus: 0,
+      bolus_units: 0.0,
+      biggest_bolus: 0.0,
       biggest_bolus_date: nil
     }
 
