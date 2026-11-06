@@ -239,3 +239,7 @@ section.disclaimer {
   border-radius: 0.33rem;
   padding: 0.5rem;
 }
+
+span.unit.small {
+  font-size: 1rem;
+}

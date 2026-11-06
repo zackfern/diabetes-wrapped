@@ -25,4 +25,10 @@ module ReportsHelper
 
     session[:current_user_id] == @report.user_id
   end
+
+  def bg_with_unit(bg, small = true)
+    content_tag(:strong, bg) +
+      " ".html_safe +
+      content_tag(:span, @report.unit, class: "unit #{small ? 'small' : ''}")
+  end
 end

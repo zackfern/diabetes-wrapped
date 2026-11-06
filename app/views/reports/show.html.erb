@@ -84,13 +84,15 @@
       <div class="stat icon-left">
         <div class="icon">📈</div>
         <div>
-          Your highest blood glucose was <%= content_tag :strong, @highest_bg %>
+          Your highest blood glucose was
+          <%= bg_with_unit(@highest_bg, false) %>
         </div>
       </div>
 
       <div class="stat icon-right text-right">
         <div>
-          And your lowest was <%= content_tag :strong, @lowest_bg %>
+          And your lowest was
+          <%= bg_with_unit(@lowest_bg, false) %>
         </div>
         <div class="icon">📉</div>
       </div>
@@ -110,26 +112,34 @@
           <div class="halves">
             <% if @report.include_insulin? %>
               <div class="grid">
-                <div class="label">Total basal</div>
-                <div class="number"><%= rounded_number_delimited month.total_basal %>u</div>
+                <div class="label">Total basal:</div>
+                <div class="number">
+                  <%= rounded_number_delimited month.total_basal %><span class="unit small">u</span>
+                </div>
 
-                <div class="label">+ bolus</div>
-                <div class="number"><%= rounded_number_delimited month.total_bolus %>u</div>
+                <div class="label">Total bolus:</div>
+                <div class="number">
+                  <%= rounded_number_delimited month.total_bolus %><span class="unit small">u</span>
+                </div>
 
-                <div class="label">= total insulin</div>
-                <div class="number"><%= rounded_number_delimited month.total_insulin %>u</div>
+                <div class="label">Total insulin:</div>
+                <div class="number">
+                  <%= rounded_number_delimited month.total_insulin %><span class="unit small">u</span>
+                </div>
 
                 <div class="label">Biggest bolus:</div>
-                <div class="number"><%= rounded_number_delimited month.biggest_bolus %>u</div>
+                <div class="number">
+                  <%= rounded_number_delimited month.biggest_bolus %><span class="unit small">u</span>
+                </div>
               </div>
             <% end %>
 
             <div class="grid">
               <div class="label">Highest BG:</div>
-              <div class="number"><%= month.highest_bg %></div>
+              <div class="number"><%= bg_with_unit(month.highest_bg) %></div>
 
               <div class="label">Lowest BG:</div>
-              <div class="number"><%= month.lowest_bg %></div>
+              <div class="number"><%= bg_with_unit(month.lowest_bg) %></div>
 
               <div class="label">Days in range:</div>
               <div class="number"><%= month.days_in_range %></div>

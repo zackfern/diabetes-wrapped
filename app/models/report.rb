@@ -8,6 +8,8 @@ class Report < ApplicationRecord
     record.slug ||= "#{RandomNonsense.adjective_food_diabetes}-#{rand(1921)}"
   end
 
+  delegate :unit, to: :user
+
   def profiles_cache_key
     "#{user.id}-profiles"
   end
