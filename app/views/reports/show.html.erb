@@ -97,10 +97,10 @@
     </div>
   </section>
 
-  <section class="months container">
+  <section class="big-container">
     <h2>Month by month breakdown:</h2>
 
-    <div>
+    <div class="months">
       <% @months.each do |month| %>
         <div class="month">
           <div class="name">
@@ -140,19 +140,19 @@
           </div>
         </div>
       <% end %>
+      <% if @report.incomplete? %>
+        <div class="month incomplete">
+          <div>
+            <strong>The year isn't over yet!</strong>
+            <% if viewer_is_owner? %>
+              <p>Come back in January to re-run the report and see the complete stats.</p>
+            <% else %>
+              <p>This report is incomplete because it was generated before the end of the year.</p>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
     </div>
-
-    <% if @report.incomplete? %>
-      <div class="incomplete">
-        <strong>The year isn't over yet!</strong>
-
-        <% if viewer_is_owner? %>
-          <p>Come back in January to re-run the report and see the complete stats.</p>
-        <% else %>
-          <p>This report is incomplete because it was generated before the end of the year.</p>
-        <% end %>
-      </div>
-    <% end %>
   </section>
 </div>
 
@@ -167,9 +167,11 @@
       due to the complexity of calculations and variety of inputs.
     </p>
 
-    <p>
-      Please refer to your Nightscout instance itself for the most accurate statistics.
-    </p>
+    <% if viewer_is_owner? %>
+      <p>
+        Please refer to your Nightscout instance itself for the most accurate statistics.
+      </p>
+    <% end %>
   </section>
 </footer>
 

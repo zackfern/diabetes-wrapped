@@ -23,6 +23,12 @@ nav {
 .container {
   max-width: 600px;
   margin: 0 auto;
+  padding: 1rem;
+}
+
+.big-container {
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 p:not(:last-child) {
