@@ -30,9 +30,9 @@ class MonthlyReportJob < ApplicationJob
     blood_glucose_stats
     @report_month.assign_attributes({
       highest_bg: @blood_glucose[:highest_value],
-      highest_bg_date: Time.parse(@blood_glucose[:highest]["dateString"]).to_date,
+      highest_bg_date: Time.zone.parse(@blood_glucose[:highest]["dateString"]),
       lowest_bg: @blood_glucose[:lowest_value],
-      lowest_bg_date: Time.parse(@blood_glucose[:lowest]["dateString"]).to_date,
+      lowest_bg_date: Time.zone.parse(@blood_glucose[:lowest]["dateString"]),
       days_in_range: @days_in_range,
       wake_ups: @nightly_wakeups
     })
@@ -101,7 +101,7 @@ class MonthlyReportJob < ApplicationJob
 
           # Don't calculate if we've already been woken up on this day:
           unless woken_up
-            occurred_at = Time.parse(entry["dateString"])
+            occurred_at = Time.zone.parse(entry["dateString"])
             woken_up = occurred_at.hour.between?(0, 6)
           end
         else
@@ -142,7 +142,7 @@ class MonthlyReportJob < ApplicationJob
 
           if treatment["insulin"] > @insulin[:biggest_bolus]
             @insulin[:biggest_bolus] = treatment["insulin"]
-            @insulin[:biggest_bolus_date] = treatment["created_at"]
+            @insulin[:biggest_bolus_date] = Time.zone.parse(treatment["created_at"])
           end
         elsif treatment["eventType"] == "Temp Basal"
           duration = treatment["duration"]
