@@ -1,1 +1,16 @@
-In progress!
+<div class="in_progress"
+  data-controller="loading-page"
+  data-loading-page-url-value="<%= report_status_url(slug: @report.slug) %>"
+>
+  <h1>Please wait...</h1>
+
+  <p>
+    It might take a while to crunch all the numbers.
+  </p>
+
+  <progress value="0" max="12" data-loading-page-target="progressBar"></progress>
+
+  <p>
+    The page will reload automatically when your report is done.
+  </p>
+</div>
