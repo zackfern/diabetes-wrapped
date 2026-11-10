@@ -85,14 +85,14 @@
         <div class="icon">📈</div>
         <div>
           Your highest blood glucose was
-          <%= bg_with_unit(@highest_bg, false) %>
+          <%= bold_bg_with_unit(@highest_bg, false) %>
         </div>
       </div>
 
       <div class="stat icon-right text-right">
         <div>
           And your lowest was
-          <%= bg_with_unit(@lowest_bg, false) %>
+          <%= bold_bg_with_unit(@lowest_bg, false) %>
         </div>
         <div class="icon">📉</div>
       </div>

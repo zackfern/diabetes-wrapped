@@ -217,7 +217,6 @@ div.month {
     .number {
       font-variant-numeric: tabular-nums;
       padding-left: 1rem;
-      text-align: right;
     }
   }
 
