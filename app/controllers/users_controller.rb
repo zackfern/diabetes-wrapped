@@ -6,6 +6,13 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
 
+    # Nightscout only returns data in mg/dL, so if the user uses mmol/L
+    # we need to convert their ranges from mmol/L to mg/dL internally:
+    if @user.unit == "mmol/L"
+      @user.range_min = (@user.range_min * 18.016).round
+      @user.range_max = (@user.range_max * 18.016).round
+    end
+
     if @user.save
       session[:current_user_id] = @user.id
 

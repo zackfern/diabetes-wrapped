@@ -14,7 +14,7 @@ export default class extends Controller {
   change_unit(event) {
     if (event.target.value === "mmol/L") {
       // Set to sensible defaults:
-      this.rangeMinTarget.value = 3.8;
+      this.rangeMinTarget.value = 3.9;
       this.rangeMaxTarget.value = 10;
 
       // Set step to support fractional values:
