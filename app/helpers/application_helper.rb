@@ -1,9 +1,9 @@
 module ApplicationHelper
-  def hide_header?
-    @hide_header || false
+  def uncontained_layout?
+    @uncontained_layout || false
   end
 
-  def hide_header!
-    @hide_header = true
+  def uncontained_layout!
+    @uncontained_layout = true
   end
 end

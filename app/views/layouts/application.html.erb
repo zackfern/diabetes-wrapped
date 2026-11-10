@@ -25,16 +25,20 @@
   </head>
 
   <body>
-    <% unless hide_header? %>
+    <% if uncontained_layout? %>
+      <main>
+        <%= yield %>
+      </main>
+    <% else %>
       <nav>
-        <div class="container">
-          <%= link_to "diabetes wrapped", :root %>
-        </div>
+        <%= link_to "diabetes wrapped", :root %>
       </nav>
-    <% end %>
 
-    <main>
-      <%= yield %>
-    </main>
+      <main>
+        <div class="container">
+          <%= yield %>
+        </div>
+      </main>
+    <% end %>
   </body>
 </html>
