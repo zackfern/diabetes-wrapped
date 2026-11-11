@@ -400,6 +400,7 @@ DEPENDENCIES
   brakeman
   bundler-audit
   capybara
+  csv
   debug
   httparty (~> 0.24.3)
   image_processing (~> 1.2)
