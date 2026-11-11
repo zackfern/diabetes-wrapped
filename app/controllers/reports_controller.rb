@@ -3,8 +3,29 @@ class ReportsController < ApplicationController
 
   def show
     @months = @report.months.to_a
-    @highest_bg = @months.collect(&:highest_bg).max
-    @lowest_bg = @months.collect(&:lowest_bg).min
+
+    @highest_bg = { value: 0, timestamp: nil, instances: 1 }
+    @lowest_bg = { value: Float::INFINITY, timestamp: nil, instances: 1 }
+    @months.each do |month|
+      if month.highest_bg >= @highest_bg[:value]
+        # If the value is equal to the current value, bump the instances:
+        if @highest_bg[:value] == month.highest_bg
+          @highest_bg[:instances] += 1
+        else
+          @highest_bg[:value] = month.highest_bg
+          @highest_bg[:timestamp] = month.highest_bg_date
+        end
+      end
+
+      if month.lowest_bg <= @lowest_bg[:value]
+        if @lowest_bg[:value] == month.lowest_bg
+          @lowest_bg[:instances] += 1
+        else
+          @lowest_bg[:value] = month.lowest_bg
+          @lowest_bg[:timestamp] = month.lowest_bg_date
+        end
+      end
+    end
 
     if @report.finished?
       render :show
