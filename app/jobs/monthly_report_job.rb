@@ -54,7 +54,13 @@ class MonthlyReportJob < ApplicationJob
       })
     end
 
-    @report_month.update({ status: :finished })
+    if @last_day != @first_day.end_of_month
+      # If the last day we processed isn't the end of the month,
+      # mark the ReportMonth as incomplete so it can be re-generated in the future:
+      @report_month.update({ status: :incomplete })
+    else
+      @report_month.update({ status: :finished })
+    end
 
     # Enqueue the next job or wrap up:
     if month < 12

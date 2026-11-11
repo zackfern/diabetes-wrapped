@@ -1,5 +1,12 @@
 class Report < ApplicationRecord
-  enum :status, [ :not_started, :in_progress, :finished ], default: :not_started
+  # Report statuses:
+  # - not_started - Report is created, but the first MonthlyReportJob hasn't run yet.
+  # - in_progress - The MonthlyReportJob is working on generating the report.
+  # - incomplete - The Report is as generated as it can be, and is visible to the user,
+  #   but doesn't contain complete stats for the year.
+  # - finished - The Report is complete, visible, and represents the entire year.
+  #   This will only happen for reports generated or re-run in the following calendar year.
+  enum :status, [ :not_started, :in_progress, :incomplete, :finished ], default: :not_started
 
   belongs_to :user
   has_many :months, class_name: "ReportMonth", dependent: :destroy
@@ -9,6 +16,10 @@ class Report < ApplicationRecord
   end
 
   delegate :unit, to: :user
+
+  def visible?
+    incomplete? || finished?
+  end
 
   def profiles_cache_key
     "#{user.id}-profiles"
@@ -29,13 +40,6 @@ class Report < ApplicationRecord
   def vial_estimate
     # Vials of insulin have 1000 each:
     (total_insulin / 1000.0).round(1)
-  end
-
-  def incomplete?
-    # Report is incomplete if the last day of the year hasn't happened yet:
-    Time.use_zone(user.timezone) do
-      DateTime.new(year, 12, -1).end_of_day.future?
-    end
   end
 
   def total_readings

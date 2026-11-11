@@ -6,7 +6,10 @@ class ReportOrchestrationJob < ApplicationJob
 
     if @report.not_started?
       MonthlyReportJob.perform_now(report_id, 1)
-    elsif @report.in_progress?
+    elsif @report.incomplete?
+      incomplete_month = @report.months.last.month
+      MonthlyReportJob.perform_now(report_id, incomplete_month)
+    elsif @report.in_progress? || @report.finished?
       finish_report!
     end
   end
@@ -25,13 +28,19 @@ class ReportOrchestrationJob < ApplicationJob
       readings_out_of_range: 0
     }
 
-    @report.months.each do |month|
+    months = @report.months.to_a
+    months.each do |month|
       attrs.each_key do |key|
+        next if month[key].nil?
         attrs[key] += month[key]
       end
     end
 
-    attrs[:status] = :finished
+    # Set the report status to match the last month's status.
+    # If it's finished, the report is finished. If it's incomplete, so is this report:
+    last_month = months.sort_by(&:month).last
+    attrs[:status] = last_month.status
+
     @report.update(attrs)
   end
 end
