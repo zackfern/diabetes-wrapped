@@ -10,6 +10,10 @@ class User < ApplicationRecord
 
   has_one :report, dependent: :destroy
 
+  after_initialize do |record|
+    record.login_token ||= Random.uuid
+  end
+
   def nightscout
     @nightscout ||= Nightscout.new(nightscout_host, nightscout_token)
   end
