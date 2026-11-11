@@ -54,7 +54,25 @@
   <% end %>
 
   <section class="cgm">
+    <div class="big-stat">
+      Your average time in range was
+      <strong class="grand-total">
+        <%= @report.in_range_percentage %>%
+      </strong>
+    </div>
+
     <div class="container">
+      <div class="stat icon-left">
+        <div class="icon material-symbols-outlined">sensors</div>
+        <div>
+          You've had
+          <strong>
+            <%= number_to_delimited @report.total_readings %>
+          </strong>
+          CGM readings this year.
+        </div>
+      </div>
+
       <div class="stat icon-right">
         <% if @report.days_in_range > 0 %>
           <div>

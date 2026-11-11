@@ -44,6 +44,6 @@ class Report < ApplicationRecord
 
   def in_range_percentage
     in_range_percentage = (readings_in_range.to_f / total_readings) * 100
-    in_range_percentage.round(2)
+    in_range_percentage.round(1)
   end
 end
