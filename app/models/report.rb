@@ -46,4 +46,20 @@ class Report < ApplicationRecord
     in_range_percentage = (readings_in_range.to_f / total_readings) * 100
     in_range_percentage.round(1)
   end
+
+  def to_csv
+    our_months = months.to_a
+    excluded_attributes = %w[id status report_id created_at updated_at]
+    attributes = our_months.first.attribute_names - excluded_attributes
+
+    CSV.generate(headers: true) do |csv|
+      # Set the headers as the attributes on ReportMonth:
+      csv << attributes
+
+      # For each month, add an item with each of the attributes:
+      our_months.each do |month|
+        csv << attributes.map { |attr| month[attr] }
+      end
+    end
+  end
 end

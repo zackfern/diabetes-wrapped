@@ -41,6 +41,20 @@ class ReportsController < ApplicationController
     }
   end
 
+  def download
+    # Only the owner can download the raw data:
+    unless session[:current_user_id] == @report.user_id
+      render plain: "Unauthorized", status: :unauthorized
+      return
+    end
+
+    respond_to do |f|
+      f.csv do
+        send_data @report.to_csv, filename: "diabetes-wrapped-#{@report.year}.csv"
+      end
+    end
+  end
+
   private
   def find_report
     @report = Report.find_by_slug(params[:slug])
