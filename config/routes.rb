@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   get "wrapped/:slug/status.json" => "reports#status", as: :report_status
 
   resources :users, except: [ :index, :destroy ]
+  get "login/:token" => "users#login", as: :login
   get "logout" => "users#logout"
 
   # Defines the root path route ("/")
