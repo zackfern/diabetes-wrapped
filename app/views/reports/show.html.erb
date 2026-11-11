@@ -37,7 +37,7 @@
       </div>
 
       <div class="stat icon-left">
-        <div class="icon grey">🔢</div>
+        <div class="icon material-symbols-outlined grey">calculate</div>
         <div>
           You bolused
           <strong>
@@ -62,14 +62,14 @@
             <strong><%= pluralize @report.days_in_range, 'day' %></strong>
             100% in range!
           </div>
-          <div class="icon red">💯</div>
+          <div class="icon material-symbols-outlined gold">trophy</div>
         <% else %>
           You didn't have any days 100% in range.
         <% end %>
       </div>
 
       <div class="stat icon-left bedtime">
-        <div class="icon">🌜</div>
+        <div class="icon material-symbols-outlined">bedtime</div>
         <div>
           You were probably woken up
           <strong><%= pluralize @report.wake_ups, 'nights' %></strong>
@@ -82,7 +82,7 @@
       </div>
 
       <div class="stat icon-left">
-        <div class="icon">📈</div>
+        <div class="icon material-symbols-outlined">trending_up</div>
         <div>
           Your highest blood glucose was
           <%= bold_bg_with_unit(@highest_bg, false) %>
@@ -94,13 +94,13 @@
           And your lowest was
           <%= bold_bg_with_unit(@lowest_bg, false) %>
         </div>
-        <div class="icon">📉</div>
+        <div class="icon material-symbols-outlined animate-jiggle">trending_down</div>
       </div>
     </div>
   </section>
 
   <section class="big-container">
-    <h2>Month by month breakdown:</h2>
+    <h2>Monthly breakdown:</h2>
 
     <div class="months">
       <% @months.each do |month| %>
