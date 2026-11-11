@@ -27,14 +27,14 @@ export default class extends Controller {
   }
 
   setProgressOrReload(data) {
-    const { status, months } = data;
-    if (status === "finished") {
+    const { visible, months } = data;
+    if (visible === true) {
       // The report is finished, reload the page to see it:
       window.location.reload();
     }
     else {
       // Set the progress bar to reflect the number of processed months:
-      this.progressBarTarget.value = data.months;
+      this.progressBarTarget.value = months;
     }
   }
 }

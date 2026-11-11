@@ -27,7 +27,7 @@ class ReportsController < ApplicationController
       end
     end
 
-    if @report.finished?
+    if @report.visible?
       render :show
     else
       render :in_progress
@@ -36,7 +36,7 @@ class ReportsController < ApplicationController
 
   def status
     render json: {
-      status: @report.status,
+      visible: @report.visible?,
       months: @report.months.finished.count
     }
   end
