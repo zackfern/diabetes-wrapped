@@ -202,7 +202,7 @@
   </section>
 </div>
 
-<footer class="container">
+<footer class="big-container report">
   <section class="disclaimer">
     <p>
       This report is meant for fun and to give a general idea of your life as a diabetic.
@@ -219,5 +219,20 @@
       </p>
     <% end %>
   </section>
-</footer>
 
+  <section class="trackr-link">
+    <% trackr_utm = "?utm_source=diabetes-wrapped&utm_campaign=#{@report.year}&utm_content=report" %>
+    <% trackr_link = "https://trackr.health/#{trackr_utm}"  %>
+    <h3>Want to do even more with your data?</h3>
+    <p>
+      <%= link_to "Trackr.health", trackr_link, target: "_blank" %>
+      helps you <mark>track your meals, blood glucose, and activity.</mark>
+      Connect your Nightscout instance, fitness device, and log your meals and activity
+      to get a complete picture of your blood glucose and everything that influences it.
+    </p>
+    <div class="links">
+      <%= link_to "Learn more", trackr_link, target: "_blank", class: "cta-button" %>
+      <%= link_to "Join the beta waitlist", "https://trackr.health/waitlist#{trackr_utm}", target: "_blank", class: "cta-button" %>
+    </div>
+  </section>
+</footer>

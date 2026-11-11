@@ -258,15 +258,91 @@ div.month {
   }
 }
 
-footer {
-  padding: 1rem 0;
+footer.report {
+  padding: 1rem;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+
+  @media screen and (max-width: 800px) {
+    grid-template-columns: 1fr;
+  }
 }
 
-section.disclaimer {
-  background-color: #FEF7DD;
-  border: 1px solid #FACA16;
-  border-radius: 0.33rem;
-  padding: 0.5rem;
+section {
+  border-radius: 0.5rem;
+  padding: 1rem;
+
+  &.disclaimer {
+    background-color: #FEF7DD;
+    border: 1px solid #FACA16;
+    box-shadow: color-mix(white 25%, #FACA16) 1px 1px 1px;
+  }
+
+  &.trackr-link {
+    --bg-color: #DFF4D4;
+    background-color: var(--bg-color);
+    background-image: linear-gradient(var(--bg-color), color-mix(black 3%, var(--bg-color)));
+    border: 1px solid #76B852;
+    box-shadow: color-mix(white 25%, #76B852) 1px 1px 1px;
+
+    a:not(.cta-button) {
+      color: color-mix(black 10%, #78BA55);
+      font-weight: bold;
+    }
+
+    .links {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.5rem;
+    }
+
+    /* From https://pepelsbey.dev/articles/skewed-highlight/ */
+    mark, .highlight {
+      --mark-color: #FFEA00;
+      --mark-skew: 0.25em;
+      --mark-height: 1em;
+      --mark-overlap: 0.3em;
+
+      font-weight: 500;
+
+      margin-inline: calc(var(--mark-overlap) * -1);
+      padding-inline: var(--mark-overlap);
+
+      background-color: transparent;
+      background-image:
+        linear-gradient(
+          to bottom right,
+          transparent 50%,
+          var(--mark-color) 50%
+        ),
+        linear-gradient(
+          var(--mark-color),
+          var(--mark-color)
+        ),
+        linear-gradient(
+          to top left,
+          transparent 50%,
+          var(--mark-color) 50%
+        )
+      ;
+      background-size:
+        var(--mark-skew) var(--mark-height),
+        calc(100% - var(--mark-skew) * 2 + 1px) var(--mark-height),
+        var(--mark-skew) var(--mark-height)
+      ;
+      background-position:
+        left center,
+        center,
+        right center
+      ;
+      background-repeat: no-repeat;
+      color: inherit;
+
+      -webkit-box-decoration-break: clone;
+      box-decoration-break: clone;
+    }
+  }
 }
 
 span.unit.small {
