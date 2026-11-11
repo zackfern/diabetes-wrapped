@@ -37,4 +37,13 @@ class Report < ApplicationRecord
       DateTime.new(year, 12, -1).end_of_day.future?
     end
   end
+
+  def total_readings
+    readings_in_range + readings_out_of_range
+  end
+
+  def in_range_percentage
+    in_range_percentage = (readings_in_range.to_f / total_readings) * 100
+    in_range_percentage.round(2)
+  end
 end

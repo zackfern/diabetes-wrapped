@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_11_06_024001) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_11_082643) do
   create_table "report_months", force: :cascade do |t|
     t.integer "report_id", null: false
     t.integer "month", null: false
@@ -29,6 +29,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_06_024001) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "wake_ups"
+    t.integer "readings_in_range"
+    t.integer "readings_out_of_range"
     t.index ["report_id"], name: "index_report_months_on_report_id"
   end
 
@@ -46,6 +48,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_06_024001) do
     t.integer "bolus_count"
     t.integer "days_in_range"
     t.integer "wake_ups"
+    t.integer "readings_in_range"
+    t.integer "readings_out_of_range"
     t.index ["user_id"], name: "index_reports_on_user_id"
   end
 

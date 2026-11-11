@@ -20,7 +20,9 @@ class ReportOrchestrationJob < ApplicationJob
       total_bolus: 0.0,
       bolus_count: 0,
       days_in_range: 0,
-      wake_ups: 0
+      wake_ups: 0,
+      readings_in_range: 0,
+      readings_out_of_range: 0
     }
 
     @report.months.each do |month|

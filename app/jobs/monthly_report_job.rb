@@ -34,7 +34,9 @@ class MonthlyReportJob < ApplicationJob
       lowest_bg: @blood_glucose[:lowest_value],
       lowest_bg_date: Time.zone.parse(@blood_glucose[:lowest]["dateString"]),
       days_in_range: @days_in_range,
-      wake_ups: @nightly_wakeups
+      wake_ups: @nightly_wakeups,
+      readings_in_range: @blood_glucose[:readings_in_range],
+      readings_out_of_range: @blood_glucose[:readings_out_of_range]
     })
 
     if report.include_insulin?
@@ -74,7 +76,9 @@ class MonthlyReportJob < ApplicationJob
       highest_value: 0,
       lowest_value: Float::INFINITY,
       highest: nil,
-      lowest: nil
+      lowest: nil,
+      readings_in_range: 0,
+      readings_out_of_range: 0
     }
     @days_in_range = 0
     @nightly_wakeups = 0
@@ -114,6 +118,10 @@ class MonthlyReportJob < ApplicationJob
 
       # If we went below our range, assume we were woken up to deal with it:
       @nightly_wakeups += 1 if woken_up
+
+      # Add in/out of range to total monthly stats:
+      @blood_glucose[:readings_in_range] += reading_in_range
+      @blood_glucose[:readings_out_of_range] += reading_out_of_range
     end
   end
 
