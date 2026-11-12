@@ -136,9 +136,12 @@ div.report header {
   text-align: center;
   text-shadow: white 0 1px 5px;
   padding: 40px 1rem 80px 1rem;
-  mask:
-    radial-gradient(89.44px at 50% calc(100% - 120px),#000 99%,#0000 101%) calc(50% - 80px) 0/160px 100%,
-    radial-gradient(89.44px at 50% calc(100% + 80px),#0000 99%,#000 101%) 50% calc(100% - 40px)/160px 100% repeat-x;
+
+  &:not(.cgm-only) {
+    mask:
+      radial-gradient(89.44px at 50% calc(100% - 120px),#000 99%,#0000 101%) calc(50% - 80px) 0/160px 100%,
+      radial-gradient(89.44px at 50% calc(100% + 80px),#0000 99%,#000 101%) 50% calc(100% - 40px)/160px 100% repeat-x;
+  }
 
   a {
     color: inherit;
@@ -200,6 +203,10 @@ section.cgm {
   --bg-color: #DFF4D4;
   background-color: var(--bg-color);
   background-image: linear-gradient(var(--bg-color), color-mix(black 3%, var(--bg-color)));
+
+  &.cgm-only {
+    margin-top: -80px;
+  }
 }
 
 h2 {

@@ -1,7 +1,7 @@
 <% uncontained_layout! %>
 
 <div class="report">
-  <header>
+  <header class="<%= 'cgm-only' unless @report.include_insulin? %>">
     Your <%= @report.year %> <%= link_to "diabetes wrapped", :root %>:
   </header>
 
@@ -53,7 +53,7 @@
     </div>
   <% end %>
 
-  <section class="cgm">
+  <section class="cgm <%= 'cgm-only' unless @report.include_insulin? %>">
     <div class="big-stat">
       Your average time in range was
       <strong class="grand-total">
