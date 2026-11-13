@@ -85,3 +85,17 @@ div.errors {
   border-radius: 0.33rem;
   margin-bottom: 1rem;
 }
+
+div.flash-error {
+  background-color: pink;
+  border: 1px solid red;
+  border-radius: 0.33rem;
+  padding: 1rem;
+}
+
+div.flash-notice {
+  background-color: honeydew;
+  border: 1px solid yellowgreen;
+  border-radius: 0.33rem;
+  padding: 1rem;
+}

@@ -33,6 +33,14 @@
       </nav>
 
       <main>
+        <% if flash.present? %>
+          <div class="container">
+            <% flash.each do |type, message| %>
+              <%= content_tag :div, message, class: "flash-#{type}" %>
+            <% end %>
+          </div>
+        <% end %>
+
         <div class="container">
           <%= yield %>
         </div>
