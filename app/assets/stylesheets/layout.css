@@ -99,3 +99,9 @@ div.flash-notice {
   border-radius: 0.33rem;
   padding: 1rem;
 }
+
+img.screenshot {
+  border-radius: 0.33rem;
+  border: 1px solid #CCC;
+  margin: 1rem 0;
+}

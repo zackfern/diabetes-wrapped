@@ -1,5 +1,6 @@
 <p>
   Diabetes Wrapped connects to your Nightscout server and lets you see cool stats about your year as a diabetic.
+  If you have insulin delivery information in Nightscout, you'll see insulin use stats in addition to CGM stats.
 </p>
 
 <% if user_signed_in? %>
@@ -7,3 +8,35 @@
 <% else %>
   <%= link_to "Get Started →", new_user_path, class: "cta-button" %>
 <% end %>
+
+<img src="/screenshot.png" class="screenshot"
+  alt="Cropped screen shot of Diabetes Wrapped report.">
+
+<h3>What does it include?</h3>
+<p>
+  <ul>
+    <li>Total units of insulin used.</li>
+    <li>Average time in range across the year.</li>
+    <li>Estimate of how many times your CGM woke you up.</li>
+    <li>Monthly breakdown of stats.</li>
+    <li>...and more!</li>
+  </ul>
+</p>
+
+<h3>Privacy</h3>
+<p>
+  <ul>
+    <li>Diabetes Wrapped <b>does not</b> sell or share your data.</li>
+    <li>
+      Your report will be accessible via a public URL, which you can choose to share with friends or family.
+      The public page does not include any personal information (email, etc).
+    </li>
+    <li>You can download a CSV of the raw data used to calculate your report once it is finished.</li>
+    <li>The data on diabeteswrapped.com will be permanently deleted in February 2027.</li>
+  </ul>
+</p>
+
+<h3>Disclaimer</h3>
+<p>
+  Diabetes Wrapped is meant for entertainment purposes only and should not be used to make treatment decisions!
+</p>
