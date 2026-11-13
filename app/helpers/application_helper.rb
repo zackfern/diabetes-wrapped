@@ -7,6 +7,9 @@ module ApplicationHelper
     @uncontained_layout = true
   end
 
+  # List of Google Fonts Material Icons to include. These have to be in alphabetical
+  # order, so it's easier to define an Array and sort it for safety:
+  #
   def material_icon_list
     %w[
       bedtime
