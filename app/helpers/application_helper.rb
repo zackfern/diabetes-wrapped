@@ -45,4 +45,9 @@ module ApplicationHelper
 
     URI.join(url, site_key).to_s
   end
+
+  def use_plausible?
+    return false unless Rails.env.production?
+    Rails.application.credentials.dig(:plausible, :src).present?
+  end
 end
