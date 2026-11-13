@@ -286,6 +286,7 @@ section {
     box-shadow: #BFBFBF 1px 1px 1px;
     display: flex;
     grid-column: span 2;
+    gap: 0.5rem;
 
     a {
       align-content: center;

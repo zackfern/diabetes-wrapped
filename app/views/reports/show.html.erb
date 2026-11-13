@@ -209,6 +209,13 @@
         <span class="material-symbols-outlined">download_2</span>
         Download CSV
       <% end %>
+
+      <% if @report.can_be_rerun? %>
+        <%= link_to rerun_report_path, data: { turbo_method: :put } do %>
+          <span class="material-symbols-outlined">refresh</span>
+          Re-run Report
+        <% end %>
+      <% end %>
     </section>
   <% end %>
 

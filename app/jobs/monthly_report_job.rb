@@ -17,7 +17,7 @@ class MonthlyReportJob < ApplicationJob
     # Heads up, we find @report in the around_perform method above.
 
     # Set the report status if it hasn't already been set:
-    report.update(status: :in_progress) if report.not_started?
+    report.update(status: :in_progress) unless report.in_progress?
 
     @report_month = report.months.find_or_initialize_by(month:)
 

@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   get "wrapped/:slug" => "reports#show", as: :report
   get "wrapped/:slug/download" => "reports#download", as: :report_download
   get "wrapped/:slug/status.json" => "reports#status", as: :report_status
+  put "wrapped/:slug/rerun" => "reports#rerun", as: :rerun_report
 
   resources :users, except: [ :index, :destroy ]
   get "login/:token" => "users#login", as: :login

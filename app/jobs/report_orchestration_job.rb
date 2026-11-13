@@ -1,12 +1,12 @@
 class ReportOrchestrationJob < ApplicationJob
   queue_as :high
 
-  def perform(report_id)
+  def perform(report_id, action: nil)
     @report = Report.find(report_id)
 
     if @report.not_started?
       MonthlyReportJob.perform_now(report_id, 1)
-    elsif @report.incomplete?
+    elsif @report.incomplete? || action == :rerun
       incomplete_month = @report.months.last.month
       MonthlyReportJob.perform_now(report_id, incomplete_month)
     elsif @report.in_progress? || @report.finished?

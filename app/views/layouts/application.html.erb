@@ -33,6 +33,7 @@
   <body>
     <% if uncontained_layout? %>
       <main>
+        <%= render partial: "application/flash" %>
         <%= yield %>
       </main>
     <% else %>
@@ -41,13 +42,7 @@
       </nav>
 
       <main>
-        <% if flash.present? %>
-          <div class="container">
-            <% flash.each do |type, message| %>
-              <%= content_tag :div, message, class: "flash-#{type}" %>
-            <% end %>
-          </div>
-        <% end %>
+        <%= render partial: "application/flash" %>
 
         <div class="container">
           <%= yield %>

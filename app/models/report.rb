@@ -66,4 +66,11 @@ class Report < ApplicationRecord
       end
     end
   end
+
+  def can_be_rerun?
+    return false unless incomplete?
+
+    # Only allow a report to be re-run every hour:
+    updated_at < 1.hour.ago
+  end
 end
