@@ -14,7 +14,9 @@ module ApplicationHelper
     %w[
       bedtime
       calculate
+      download_2
       notifications_active
+      refresh
       sensors
       trending_down
       trending_up

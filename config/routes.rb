@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
 
   get "wrapped/:slug" => "reports#show", as: :report
-  get "wrapped/:slug/download" => "reports#download", as: :report_csv
+  get "wrapped/:slug/download" => "reports#download", as: :report_download
   get "wrapped/:slug/status.json" => "reports#status", as: :report_status
 
   resources :users, except: [ :index, :destroy ]

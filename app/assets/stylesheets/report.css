@@ -280,6 +280,29 @@ section {
   border-radius: 0.5rem;
   padding: 1rem;
 
+  &.tools {
+    background: #FBFBFB;
+    border: 1px solid #CCC;
+    box-shadow: #BFBFBF 1px 1px 1px;
+    display: flex;
+    grid-column: span 2;
+
+    a {
+      align-content: center;
+      border-radius: 10rem;
+      border: 1px solid #666;
+      color: #222;
+      display: flex;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      text-decoration: none;
+
+      &:hover {
+        background-color: white;
+      }
+    }
+  }
+
   &.disclaimer {
     background-color: #FEF7DD;
     border: 1px solid #FACA16;

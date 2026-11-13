@@ -191,7 +191,7 @@
           <div>
             <strong>The year isn't over yet!</strong>
             <% if viewer_is_owner? %>
-              <p>Come back in January to re-run the report and see the complete stats.</p>
+              <p>Come back in January to re-run the report and see your complete stats.</p>
             <% else %>
               <p>This report is incomplete because it was generated before the end of the year.</p>
             <% end %>
@@ -203,6 +203,15 @@
 </div>
 
 <footer class="big-container report">
+  <% if viewer_is_owner? %>
+    <section class="tools">
+      <%= link_to report_download_path(format: :csv) do %>
+        <span class="material-symbols-outlined">download_2</span>
+        Download CSV
+      <% end %>
+    </section>
+  <% end %>
+
   <section class="disclaimer">
     <p>
       This report is meant for fun and to give a general idea of your life as a diabetic.
