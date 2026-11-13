@@ -46,9 +46,10 @@ class UsersController < ApplicationController
 
   def login
     @user = User.find_by(login_token: params[:token])
-    session[:current_user_id] = @user.id
 
     if @user.present?
+      session[:current_user_id] = @user.id
+
       flash[:notice] = "Welcome back!"
       redirect_to :root
     else
