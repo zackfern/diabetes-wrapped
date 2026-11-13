@@ -67,3 +67,5 @@ end
 
 gem "httparty", "~> 0.24.3"
 gem "csv"
+
+gem "mission_control-jobs"
