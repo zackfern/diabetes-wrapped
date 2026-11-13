@@ -1,5 +1,5 @@
 class ReportOrchestrationJob < ApplicationJob
-  queue_as :default
+  queue_as :high
 
   def perform(report_id)
     @report = Report.find(report_id)
