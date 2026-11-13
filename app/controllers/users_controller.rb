@@ -20,6 +20,7 @@ class UsersController < ApplicationController
       @report = @user.build_report(include_insulin: latest_treatment.present?)
 
       if @report.save
+        UserMailer.with(user: @user).signup_email.deliver_later
         ReportOrchestrationJob.perform_later(@report.id)
         redirect_to report_path(@report.slug)
       end
