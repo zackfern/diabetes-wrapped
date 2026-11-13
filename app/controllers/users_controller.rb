@@ -6,11 +6,26 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
 
+    # If the user is invalid, re-render the sign-up form:
+    unless @user.valid?
+      @cap_token = params["cap-token"]
+      render action: :new, status: :unprocessable_entity
+      return
+    end
+
     # Nightscout only returns data in mg/dL, so if the user uses mmol/L
     # we need to convert their ranges from mmol/L to mg/dL internally:
     if @user.unit == "mmol/L"
       @user.range_min = (@user.range_min * 18.016).round
       @user.range_max = (@user.range_max * 18.016).round
+    end
+
+    # If enabled, validate Cap token to prevent bots from signing up:
+    if helpers.use_cap?
+      unless validate_cap_token
+        flash[:error] = "Sorry, we couldn't verify that you aren't a bot."
+        redirect_to :root, status: :unprocessable_entity
+      end
     end
 
     if @user.save
@@ -59,5 +74,10 @@ class UsersController < ApplicationController
       :timezone,
       :unit,
     )
+  end
+
+  def validate_cap_token
+    response = Cap.new.validate(params["cap-token"])
+    response.dig("success") == true
   end
 end

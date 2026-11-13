@@ -1,3 +1,9 @@
+<% if use_cap? %>
+  <% content_for :head do %>
+    <script src="https://cdn.jsdelivr.net/npm/cap-widget@0.1.63"></script>
+  <% end %>
+<% end %>
+
 <% if @user.errors.present? %>
   <div class="errors">
     An error ocurred:
@@ -64,6 +70,17 @@
       Set the minimum and maximum values for what you consider to be "in range."
     </p>
   </div>
+
+  <% if use_cap? %>
+    <%# If a Cap Token is set, include it as a hidden field and hide the widget so the user isn't challenged again. %>
+    <% if @cap_token.present? %>
+      <%= hidden_field_tag "cap-token", @cap_token %>
+    <% else %>
+      <div class="row">
+        <cap-widget required data-cap-api-endpoint="<%= cap_endpoint %>">
+      </div>
+    <% end %>
+  <% end %>
 
   <%= f.submit "Continue" %>
 <% end %>
