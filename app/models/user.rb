@@ -1,6 +1,8 @@
 class User < ApplicationRecord
   UNITS = [ "mg/dL", "mmol/L" ]
 
+  encrypts :nightscout_token
+
   validates :email, format: URI::MailTo::EMAIL_REGEXP, uniqueness: true
   validates :nightscout_host, format: URI::DEFAULT_PARSER.make_regexp
   validates :nightscout_token, presence: true
