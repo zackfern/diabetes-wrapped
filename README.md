@@ -76,3 +76,13 @@ The **ReportOrchestrationJob** runs at the beginning and end of the report gener
 It will either enqueue the first `MonthlyReportJob`, if the Report has the status not_started,
 or it will add up total stats across the year from each child `ReportMonth` and set a report
 to status finished.
+
+# Running It
+The application is a straightforward Ruby on Rails web application, which can be run either
+locally in development mode or deployed elsewhere. It is also available to use at
+https://diabeteswrapped.com for a limited time (around the end/beginning of the year).
+
+This README won't cover how to install and run Ruby and/or Rails, please refer to the offical
+[Rails Installation Guide][1] for a walkthrough if you're unfamiliar.
+
+[1]: https://guides.rubyonrails.org/install_ruby_on_rails.html
