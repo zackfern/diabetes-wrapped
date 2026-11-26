@@ -85,4 +85,13 @@ https://diabeteswrapped.com for a limited time (around the end/beginning of the 
 This README won't cover how to install and run Ruby and/or Rails, please refer to the offical
 [Rails Installation Guide][1] for a walkthrough if you're unfamiliar.
 
+## Local Development
+
+### Initial Setup
+- Ensure the correct version of Ruby is installed. To see the version: `cat .ruby-version`
+- Run `bin/rails db:encryption:init` to generate ActiveRecord Encryption keys.
+- Run `EDITOR=vim bin/rails credentials:edit` to create a `config/master.key` file and add the generated keys.
+
+Then, to make changes, run `bin/dev`
+
 [1]: https://guides.rubyonrails.org/install_ruby_on_rails.html
