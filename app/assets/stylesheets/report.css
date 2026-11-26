@@ -285,8 +285,11 @@ section {
     border: 1px solid #CCC;
     box-shadow: #BFBFBF 1px 1px 1px;
     display: flex;
-    grid-column: span 2;
     gap: 0.5rem;
+
+    @media screen and (width > 800px) {
+      grid-column: span 2;
+    }
 
     a {
       align-content: center;
